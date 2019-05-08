@@ -6,7 +6,7 @@ import (
 	//"strconv"
 	"io"
 	"os"
-	"time"
+	//"time"
 )
 
 func SnapshotHandler(w http.ResponseWriter, r *http.Request) {
@@ -23,16 +23,15 @@ func SnapshotHandler(w http.ResponseWriter, r *http.Request) {
 		defer f.Close()
 		io.Copy(f, file)
 		fmt.Println("ok")
-		//fmt.Fprintf(w, "size: %d", file.(Sizer).Size())
-		return
+		
+	} else {
+		fmt.Fprintf(w, "size: %d", 200)
 	}
+	
+	return
 }
 
 func main() {
 	http.HandleFunc("/snapshot", SnapshotHandler)
-	http.ListenAndServe("10.0.39.253:8080", nil)
-	
-	for true{
-	   time.Sleep(1) 
-	}
+	http.ListenAndServe("0.0.0.0:8080", nil)
 }

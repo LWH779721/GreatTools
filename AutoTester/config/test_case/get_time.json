@@ -1,0 +1,7 @@
+{
+	"action":"get_time",
+	"test_case":[
+		{"id":"0", "param":{"a":"1", "b":"2"}, "result":{"a":"1", "b":"2"}},
+		{"id":"1", "param":{"a":"1", "b":"2"}, "result":{"a":"2", "b":"2"}}
+	]
+}

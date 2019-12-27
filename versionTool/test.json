@@ -1,0 +1,64 @@
+{
+    "cblAuthDelegate": {
+        "databaseFilePath": "/data/alexa/cblAuthDelegate.db"
+    },
+    "app": {
+        "firmwareVersion": "v1.0.1576555607",
+        "debug": 0
+    },
+    "debug": {
+        "coredump": 1,
+        "adb": 1,
+        "watchdog": 0
+    },
+    "notifications": {
+        "databaseFilePath": "/data/alexa/notifications.db"
+    },
+    "miscDatabase": {
+        "databaseFilePath": "/data/alexa/miscDatabase.db"
+    },
+    "deviceInfo": {
+        "productId": "Widya_Prima",
+        "deviceSerialNumber": "8516",
+        "clientId": "widya.application-oa2-client.49ac62b58e8444e5976a8f0e250cd8fb"
+    },
+    "alertsCapabilityAgent": {
+        "databaseFilePath": "/data/alexa/alerts.db"
+    },
+    "deviceSettings": {
+        "databaseFilePath": "/data/alexa/deviceSettings.db"
+    },
+    "capabilitiesDelegate": {},
+    "wwd": {
+        "wwdFilePath": "/usr/misc/sai_config_hi_hello_widya",
+        "wwdLiscenseFilePath": "/usr/misc/license_widya.txt",
+        "wwdKeyWord": "hi_hello_widya"
+    },
+    "network": {
+        "referenceUrl": "www.google.co.id"
+    },
+    "mrm": {
+        "audioPlayerSampleRate": 48000,
+        "audioClockSystemClockDriftPpm": "0.0",
+        "amazonId": "A6AQ4ZK8BGCP3",
+        "clockDriftTolerancePpm": "20",
+        "clockNominalDriftPpm": "0.0",
+        "audioPlayerDeviceName": "track:10",
+        "audioPlayerOffsetDurationNs": 340000
+    },
+    "bluetooth": {
+        "databaseFilePath": "/data/alexa/bluetooth.db"
+    },
+    "sampleApp": {
+        "displayCardsSupported": true
+    },
+    "certifiedSender": {
+        "databaseFilePath": "/data/alexa/certifiedsender.db"
+    },
+    "settings": {
+        "databaseFilePath": "/data/alexa/settings.db",
+        "defaultAVSClientSettings": {
+            "locale": "en-US"
+        }
+    }
+}

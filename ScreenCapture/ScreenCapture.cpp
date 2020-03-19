@@ -1,12 +1,16 @@
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <unistd.h>
 
 #include "fb.h"
+#include <gflags/gflags.h>
 
 #define FB_PATH					"/dev/fb0"
 
@@ -16,6 +20,8 @@ unsigned int *fb_buffer = NULL;
 unsigned int *raw_data_buffer = NULL;
 
 #pragma pack(push, 1)
+
+using namespace std;
 
 typedef struct{
     unsigned short type;        //default 0x4D42 'BM'
@@ -86,6 +92,9 @@ long RGB32ToBmp(const char* const file, const int width, const int height)
 	}*/
 	
 	fwrite(raw_data_buffer, sizeof(unsigned int), width*height, fp);
+    
+    fflush(fp);
+    fsync(fileno(fp));
     fclose(fp);
     return 0;
 }
@@ -103,20 +112,23 @@ int dumpBGRA(const char* const file, unsigned int *buffer, int size){
 	return size;
 }
 
-void usage(int argc, char *argv[])
-{
-	printf("	Usage:%s bmpFile\n", argv[0]);
-	printf("	   ex:%s x.bmp\n", argv[0]);
+string genRandomString(){
+    int t = time(NULL);
+    
+    return std::to_string(t);
 }
 
+DEFINE_string(dst, "xxxx.bmp", "dst bmp file");
 int main(int argc, char *argv[])
 {
 	int ret = 0;
+    int screensize = 0;
+    
+    gflags::ParseCommandLineFlags(&argc, &argv, true);
 
-	if (argc != 2) {
-		usage(argc, argv);
-		return -1;	
-	}
+    if (FLAGS_dst == "xxxx.bmp"){
+        FLAGS_dst = genRandomString() + ".bmp";
+    }
 
     fd_fb = open(FB_PATH, O_RDWR);
     if (fd_fb < 0) {
@@ -131,14 +143,14 @@ int main(int argc, char *argv[])
 		goto end;
 	}
 
-	int screensize = screeninfo.xres * screeninfo.yres * screeninfo.bits_per_pixel / 8;
+	screensize = screeninfo.xres * screeninfo.yres * screeninfo.bits_per_pixel / 8;
 	fb_buffer = (unsigned int *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_fb, 0);	
 	
-	raw_data_buffer = malloc(screensize);
+	raw_data_buffer = (unsigned int *)malloc(screensize);
 	
 	memcpy(raw_data_buffer, fb_buffer, screensize);
 	
-	RGB32ToBmp(argv[1], 1024, 600);
+	RGB32ToBmp(FLAGS_dst.c_str(), (int)screeninfo.xres, (int)screeninfo.yres);
 	
 	munmap(fb_buffer, screensize);
 

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+########################
+#  gerrit helper 
+# 
+#
+########################
+
+isRepo(){
+    git log -1 > /dev/null 2>&1
+    if [ $? != "0" ];then
+        echo "Exit because not in a git repository"
+        exit
+    fi
+}
+
+review(){
+    cmd="git push origin HEAD:refs/for/"$1
+    echo $cmd
+    $cmd
+}
+
+isRepo
+branch=`git branch --show-current > /dev/null 2>&1`
+
+if [ "$1" == "review" ];then
+    echo "review"
+    review $branch
+fi
+
